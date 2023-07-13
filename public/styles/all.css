@@ -4,25 +4,27 @@
     --main-orange-color: #FF5A30;
 }
 
-@font-face {
-    font-family: 'Ubuntu Light';
-    src: url(../assets/fonts/ubuntu/Ubuntu-Light.ttf);
-}
+/*@font-face {*/
+/*    font-family: 'Ubuntu Light';*/
+/*    src: url(../assets/fonts/ubuntu/Ubuntu-Light.ttf);*/
+/*}*/
 
-@font-face {
-    font-family: 'Ubuntu Regular';
-    src: url(../assets/fonts/ubuntu/Ubuntu-Regular.ttf);
-}
+/*@font-face {*/
+/*    font-family: 'Ubuntu Regular';*/
+/*    src: url(../assets/fonts/ubuntu/Ubuntu-Regular.ttf);*/
+/*}*/
 
-@font-face {
-    font-family: 'Ubuntu Medium';
-    src: url(../assets/fonts/ubuntu/Ubuntu-Medium.ttf);
-}
+/*@font-face {*/
+/*    font-family: 'Ubuntu Medium';*/
+/*    src: url(../assets/fonts/ubuntu/Ubuntu-Medium.ttf);*/
+/*}*/
 
-@font-face {
-    font-family: 'Ubuntu Bold';
-    src: url(../assets/fonts/ubuntu/Ubuntu-Bold.ttf);
-}
+/*@font-face {*/
+/*    font-family: 'Ubuntu Bold';*/
+/*    src: url(../assets/fonts/ubuntu/Ubuntu-Bold.ttf);*/
+/*}*/
+
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;700&display=swap');
 
 [hidden] {
     display: none;
@@ -31,7 +33,6 @@
 *,
 *+* {
     box-sizing: border-box;
-    /* font-size: 16px; */
     font-family: 'Ubuntu Regular', sans-serif;
 }
 
@@ -45,6 +46,7 @@ body {
     overflow-x: hidden;
     margin: 0;
     padding: 0;
+    font-family: 'Ubuntu', sans-serif;
 }
 
 h1,

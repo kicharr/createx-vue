@@ -36,6 +36,9 @@ pre {
   font-family: monospace, monospace;
   /* 1 */
 }
+p {
+  margin-bottom: 0;
+}
 
 a {
   background-color: transparent;
