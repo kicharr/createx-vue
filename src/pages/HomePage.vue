@@ -1,10 +1,13 @@
 <template>
-  <h1>Home Page Test</h1>
+  <header-component></header-component>
 </template>
 
 <script>
+import HeaderComponent from "@/components/Header.vue";
+
 export default {
-  name: "HomePage"
+  name: "HomePage",
+  components: {HeaderComponent}
 }
 </script>
 
