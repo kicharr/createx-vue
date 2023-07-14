@@ -87,7 +87,6 @@
 
       </div>
     </section>
-
     <div class="values-history__wrapper">
       <section class="values container">
         <div class="section-title__wrapper">
@@ -194,7 +193,6 @@
       </section>
 
     </div>
-
     <section class="partners">
       <div class="section-title__wrapper">
         <h2>Our partners</h2>
@@ -265,7 +263,6 @@
         </div>
       </div>
     </section>
-
     <section class="team container">
       <div class="section-title__wrapper">
         <h2>Our team</h2>
@@ -275,9 +272,9 @@
       </div>
 
       <div id="teamWrapper" class="team-cards__wrapper employees-hideen__wrapper">
-        <div id="employeeCard" class="team-card">
+        <div id="employeeCard" class="team-card" v-for="item in paginationEmployersList" :key="item">
           <div class="team-worker-img__wrapper">
-            <img class="worker-image" src="../assets/images/about-page/team1.jpg" alt="Worker">
+            <img class="worker-image" :src="item.photo" alt="Worker">
             <div class="social__wrapper">
               <div class="social__item">
                 <a href="#">
@@ -296,20 +293,24 @@
               </div>
             </div>
           </div>
-          <div class="team-worker-name__wrapper">
-            <p class="worker-name">Courtney Alexander</p>
-          </div>
-          <div class="team-worker-position__wrapper">
-            <p class="worker-position">CEO, Co-Founder</p>
-          </div>
+
+          <p ref="emName" class="worker-name">{{ item.name }}</p>
+          <p class="worker-position">{{ item.position }}</p>
+
         </div>
       </div>
 
       <div class="load-more-button__wrapper">
-        <label id="loaderWrapper" class="loader__wrapper">
+        <button @click="page++" id="loaderWrapper" class="loader__wrapper">
           <img id="loaderCircle" class="loader-img" src="../assets/icons/portfolio-add__loader.svg">
           Show more employees
-        </label>
+        </button>
+
+        <button @click="removePaginationEmployer" id="hideAllEmployersBtn"
+                class="footer-form-btn hide-all-employers__btn">
+          Hide the list of all employees
+        </button>
+
       </div>
 
       <div class="team-position__link">
@@ -319,7 +320,6 @@
         <a href="/about/vacancies" class="available-positions"> Available Positions</a>
       </div>
     </section>
-
     <section class="map-worldwide container">
       <div class="section-title__wrapper">
         <h2>We work worldwide</h2>
@@ -366,6 +366,76 @@ export default {
   // eslint-disable-next-line vue/multi-word-component-names
   name: "About",
   components: {QuickFormFooter, FooterComponent, HeaderComponent},
+  watch: {
+    page: function (val) {
+      this.getPaginationEmployer(val);
+    }
+  },
+  data() {
+    return {
+      employeesUrl: 'https://res.cloudinary.com/dui2dgzj2/raw/upload/v1689335448/employees.json',
+      teamWrapper: null,
+      employeesArray: [],
+      paginationEmployersList: [],
+      page: 1,
+      limit: 8,
+    }
+  },
+  beforeMount() {
+    this.setResponce();
+  },
+  methods: {
+    getPaginationEmployer(page) {
+      if (this.paginationEmployersList.length === this.employeesArray.length) {
+        document.getElementById('loaderWrapper').style.cssText = 'display: none;';
+        document.getElementById('hideAllEmployersBtn').style.cssText = 'display: block';
+      } else {
+        document.getElementById('loaderWrapper').style.cssText = 'display: block;';
+        document.getElementById('hideAllEmployersBtn').style.cssText = 'display: none';
+      }
+      this.paginationEmployersList = [...this.paginationEmployersList, ...this.employeesArray?.slice(this.paginationEmployersList.length, page * this.limit)]
+    },
+    removePaginationEmployer() {
+      this.paginationEmployersList.length > this.limit ? this.paginationEmployersList.splice(this.page * this.limit, this.limit) : console.log('stop');
+    },
+    setResponce() {
+      fetch(this.employeesUrl)
+          .then(data => data.json())
+          .then(res => this.getEmployees(res.employees))
+    },
+    getEmployees(res) {
+      this.employeesArray = JSON.parse(JSON.stringify(res));
+      this.getPaginationEmployer(this.page)
+      // for (let j = 0; j < this.employeesArray.length; j++) {
+      //   let employeeCard = document.createElement ('div');
+      //   let employeeImage = document.createElement('img');
+      //   let employeeName = document.createElement('p');
+      //   let employeePosition = document.createElement('p');
+      //   // classes
+      //   employeeCard.className = 'team-card';
+      //   employeeImage.className = 'worker-image';
+      //   employeeName.className = 'worker-name';
+      //   employeePosition.className = 'worker-position';
+      //
+      //   employeeName.innerHTML = this.employeesArray[j].name;
+      //   employeeImage.src = this.employeesArray[j].photo;
+      //   employeePosition.innerHTML = this.employeesArray[j].position;
+      //
+      //
+      //   employeeCard.append(employeeImage);
+      //   employeeCard.append(employeeName);
+      //   employeeCard.append(employeePosition);
+      //
+      //
+      //   console.log(employeeCard);
+      //   this.teamWrapper.append(employeeCard);
+      // }
+
+    }
+  },
+  mounted() {
+    this.teamWrapper = document.getElementById('teamWrapper');
+  }
 }
 
 </script>
@@ -691,14 +761,6 @@ export default {
   grid-row-gap: 60px;
 
   margin-bottom: 80px;
-
-
-}
-
-.employees-hideen__wrapper {
-  max-height: 900px;
-  height: 100%;
-  overflow: hidden;
 }
 
 .team-card {
@@ -857,17 +919,39 @@ export default {
 .load-more-button__wrapper {
   justify-content: center;
   margin: 0 auto 100px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
 
 .loader__wrapper {
   display: flex;
   justify-content: center;
+  align-items: center;
   cursor: pointer;
   gap: 16px;
   margin: 0 auto;
   transition: all .5s linear;
+
+  background-color: transparent;
+  border: none;
 }
 
+.hide-all-employers__btn {
+  color: #FFFFFF;
+  border-radius: 4px;
+  margin: 0 auto;
+  padding: 10px 30px;
+
+  display: none;
+  transition: all .3s linear;
+}
+
+.hide-all-employers__btn:hover {
+  border: 1px solid var(--main-orange-color);
+  background-color: transparent;
+  color: var(--main-orange-color);
+}
 
 .loader-text {
   font-weight: 700;
