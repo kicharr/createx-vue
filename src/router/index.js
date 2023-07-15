@@ -28,6 +28,11 @@ const routes = [
             }
         ]
     },
+    // {
+    //     path: '/vacancies',
+    //     name: 'vacancies',
+    //     component: vacancies
+    // },
     {
         path: '/services',
         name: 'services',
@@ -45,7 +50,7 @@ const routes = [
         children: [
             {
                 path: '/news/:id',
-                name:'separate-news',
+                name: 'separate-news',
                 component: SeparateNewsComponent
             }
         ]

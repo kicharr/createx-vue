@@ -270,34 +270,15 @@
           People are at the heart of Createx Construction Bureau
         </p>
       </div>
+      <div class="search-name-input__wrapper">
+        <input type="text" placeholder="Start writing the name" class="search-name-input " v-model="searchName">
+      </div>
 
-      <div id="teamWrapper" class="team-cards__wrapper employees-hideen__wrapper">
-        <div id="employeeCard" class="team-card" v-for="item in paginationEmployersList" :key="item">
-          <div class="team-worker-img__wrapper">
-            <img class="worker-image" :src="item.photo" alt="Worker">
-            <div class="social__wrapper">
-              <div class="social__item">
-                <a href="#">
-                  <img src="../assets/icons/in.svg">
-                </a>
-              </div>
-              <div class="social__item">
-                <a href="#">
-                  <img src="../assets/icons/twitter-team-card.svg">
-                </a>
-              </div>
-              <div class="social__item">
-                <a href="#">
-                  <img src="../assets/icons/facebook-team__card.svg">
-                </a>
-              </div>
-            </div>
-          </div>
-
-          <p ref="emName" class="worker-name">{{ item.name }}</p>
-          <p class="worker-position">{{ item.position }}</p>
-
-        </div>
+      <div id="teamWrapper" class="team-cards__wrapper">
+        <EmployerCardComponent
+            v-for="(item,index) in paginationEmployersList.filter((employer)=> searchName ? (employer.name.toLowerCase().includes(searchName.toLowerCase())) : true)"
+            :employer="item" :key="index">
+        </EmployerCardComponent>
       </div>
 
       <div class="load-more-button__wrapper">
@@ -316,8 +297,7 @@
       <div class="team-position__link">
         <p class="position__link-text">Become a part of the best team in the construction market of the USA.
         </p>
-
-        <a href="/about/vacancies" class="available-positions"> Available Positions</a>
+        <router-link to="/about/vacancies" class="available-positions">Available Positions</router-link>
       </div>
     </section>
     <section class="map-worldwide container">
@@ -361,11 +341,12 @@
 import HeaderComponent from "@/components/HeaderComponent.vue";
 import FooterComponent from "@/components/FooterComponent.vue";
 import QuickFormFooter from "@/components/QuickFormFooter.vue";
+import EmployerCardComponent from "@/components/EmployerCardComponent.vue";
 
 export default {
   // eslint-disable-next-line vue/multi-word-component-names
   name: "About",
-  components: {QuickFormFooter, FooterComponent, HeaderComponent},
+  components: {EmployerCardComponent, QuickFormFooter, FooterComponent, HeaderComponent},
   watch: {
     page: function (val) {
       this.getPaginationEmployer(val);
@@ -379,6 +360,8 @@ export default {
       paginationEmployersList: [],
       page: 1,
       limit: 8,
+      paginationEnding: false,
+      searchName: null
     }
   },
   beforeMount() {
@@ -386,14 +369,17 @@ export default {
   },
   methods: {
     getPaginationEmployer(page) {
+
+      if (this.paginationEnding) return;
+
+      this.paginationEmployersList = [...this.paginationEmployersList, ...this.employeesArray?.slice(this.paginationEmployersList.length, page * this.limit)]
+
       if (this.paginationEmployersList.length === this.employeesArray.length) {
         document.getElementById('loaderWrapper').style.cssText = 'display: none;';
         document.getElementById('hideAllEmployersBtn').style.cssText = 'display: block';
-      } else {
-        document.getElementById('loaderWrapper').style.cssText = 'display: block;';
-        document.getElementById('hideAllEmployersBtn').style.cssText = 'display: none';
+        this.paginationEnding = true;
       }
-      this.paginationEmployersList = [...this.paginationEmployersList, ...this.employeesArray?.slice(this.paginationEmployersList.length, page * this.limit)]
+
     },
     removePaginationEmployer() {
       this.paginationEmployersList.length > this.limit ? this.paginationEmployersList.splice(this.page * this.limit, this.limit) : console.log('stop');
@@ -406,31 +392,6 @@ export default {
     getEmployees(res) {
       this.employeesArray = JSON.parse(JSON.stringify(res));
       this.getPaginationEmployer(this.page)
-      // for (let j = 0; j < this.employeesArray.length; j++) {
-      //   let employeeCard = document.createElement ('div');
-      //   let employeeImage = document.createElement('img');
-      //   let employeeName = document.createElement('p');
-      //   let employeePosition = document.createElement('p');
-      //   // classes
-      //   employeeCard.className = 'team-card';
-      //   employeeImage.className = 'worker-image';
-      //   employeeName.className = 'worker-name';
-      //   employeePosition.className = 'worker-position';
-      //
-      //   employeeName.innerHTML = this.employeesArray[j].name;
-      //   employeeImage.src = this.employeesArray[j].photo;
-      //   employeePosition.innerHTML = this.employeesArray[j].position;
-      //
-      //
-      //   employeeCard.append(employeeImage);
-      //   employeeCard.append(employeeName);
-      //   employeeCard.append(employeePosition);
-      //
-      //
-      //   console.log(employeeCard);
-      //   this.teamWrapper.append(employeeCard);
-      // }
-
     }
   },
   mounted() {
@@ -753,70 +714,34 @@ export default {
 
 /* TEAM */
 
-.team-cards__wrapper {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  grid-template-rows: repeat(2, 1fr);
-  grid-column-gap: 30px;
-  grid-row-gap: 60px;
+.search-name-input__wrapper {
+  display: flex;
+  justify-content: right;
+  margin-bottom: 30px;
+}
 
+.team-cards__wrapper {
+  display: flex;
+//justify-content: space-between; column-gap: 30px;
+  row-gap: 30px;
+
+  flex-wrap: wrap;
   margin-bottom: 80px;
 }
 
-.team-card {
-  text-align: center;
-}
-
-.team-worker-name__wrapper {
-  margin-bottom: 4px;
-}
-
-.worker-name {
-  font-size: 20px;
+.search-name-input {
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid #9A9CA5;
+  border-radius: 4px;
+  padding: 11px 120px 12px 16px;
   color: var(--main-title-color);
-  font-weight: 700;
-  line-height: 150%;
+  min-height: 44px;
 }
 
-.worker-position {
-  font-size: 16px;
-  color: #787A80;
-  line-height: 160%;
-}
-
-.team-worker-img__wrapper {
-  position: relative;
-  margin-bottom: 16px;
-  display: flex;
-  overflow: hidden;
-}
-
-.worker-image {
-  width: 285px;
-  height: 340px;
-}
-
-.social__wrapper {
-  padding: 20px 0;
-  position: absolute;
-  width: 100%;
-  bottom: 0;
-  left: 0;
-  background-color: #FF5A30;
-  border-radius: 0px 0px 4px 4px;
-  opacity: 0.7;
-
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  justify-content: center;
-  transform: translateY(100px);
-
-  transition: all .2s linear;
-}
-
-.team-worker-img__wrapper:hover .social__wrapper {
-  transform: translateY(0);
+.search-name-input:focus-visible {
+  border: 1px solid var(--main-orange-color);
+  outline: none;
+  box-shadow: 0 0 10px var(--main-orange-color);
 }
 
 .team-position__link {
@@ -824,6 +749,7 @@ export default {
   justify-content: center;
   margin-bottom: 120px;
 }
+
 
 .position__link-text {
   text-align: center;
