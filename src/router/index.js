@@ -6,7 +6,7 @@ import Work from "@/pages/Work.vue";
 import News from "@/pages/News.vue";
 import Contacts from "@/pages/Contacts.vue";
 import SeparateNewsComponent from "@/components/SeparateNewsComponent.vue";
-import vacancies from "@/pages/Vacancies.vue";
+import Vacancies from "@/pages/Vacancies.vue";
 
 
 // creating routes to all pages
@@ -20,19 +20,19 @@ const routes = [
         path: '/about',
         name: 'about',
         component: About,
-        children: [
-            {
-                path: '/about/vacancies',
-                name:'vacancies',
-                component: vacancies
-            }
-        ]
+        // children: [
+        //     {
+        //         path: '/vacancies',
+        //         name:'vacancies',
+        //         component: Vacancies
+        //     }
+        // ]
     },
-    // {
-    //     path: '/vacancies',
-    //     name: 'vacancies',
-    //     component: vacancies
-    // },
+    {
+        path: '/vacancies',
+        name: 'vacancies',
+        component: Vacancies
+    },
     {
         path: '/services',
         name: 'services',

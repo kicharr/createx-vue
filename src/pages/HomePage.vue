@@ -5,17 +5,8 @@
     <div class="main-wrapper container">
       <div class="bg-slider">
         <div class="slider-item">
-          <img class="slider-item__image" src="../assets/images/bg-slider-image.jpg" alt="Slider Image">
+          <SliderSwiperHomePage></SliderSwiperHomePage>
         </div>
-<!--        <div class="slider-item">-->
-<!--          <img class="slider-item__image" src="../assets/images/bg-slider-image.jpg" alt="Slider Image">-->
-<!--        </div>-->
-<!--        <div class="slider-item">-->
-<!--          <img class="slider-item__image" src="../assets/images/bg-slider-image.jpg" alt="Slider Image">-->
-<!--        </div>-->
-<!--        <div class="slider-item">-->
-<!--          <img class="slider-item__image" src="../assets/images/bg-slider-image.jpg" alt="Slider Image">-->
-<!--        </div>-->
       </div>
       <section class="main-wrapper__content">
         <div class="main-title__wrapper">
@@ -498,10 +489,11 @@
 import HeaderComponent from "@/components/HeaderComponent.vue";
 import FooterComponent from "@/components/FooterComponent.vue";
 import QuickFormFooter from "@/components/QuickFormFooter.vue";
+import SliderSwiperHomePage from "@/components/AssetsComponents/SliderSwiperHomePage.vue";
 
 export default {
   name: "HomePage",
-  components: {QuickFormFooter, FooterComponent, HeaderComponent},
+  components: {SliderSwiperHomePage, QuickFormFooter, FooterComponent, HeaderComponent},
 }
 </script>
 

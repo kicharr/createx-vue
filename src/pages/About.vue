@@ -297,7 +297,9 @@
       <div class="team-position__link">
         <p class="position__link-text">Become a part of the best team in the construction market of the USA.
         </p>
-        <router-link to="/about/vacancies" class="available-positions">Available Positions</router-link>
+        <router-link :to='{name: "vacancies"}' class="available-positions">Available Positions</router-link>
+
+        <a href="/vacancies">123213</a>
       </div>
     </section>
     <section class="map-worldwide container">
@@ -414,7 +416,6 @@ export default {
   background-repeat: no-repeat;
   background-size: cover;
   position: absolute;
-  z-index: -1;
   top: 0;
   left: 0;
   width: 100%;
@@ -722,8 +723,7 @@ export default {
 
 .team-cards__wrapper {
   display: flex;
-//justify-content: space-between; column-gap: 30px;
-  row-gap: 30px;
+//justify-content: space-between; column-gap: 30px; row-gap: 30px;
 
   flex-wrap: wrap;
   margin-bottom: 80px;
