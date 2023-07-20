@@ -81,7 +81,6 @@
 
 
     <div class="modals__wrapper">
-
       <div id="subscribeModal" class="subscribe-form__modal">
         <button id="closeSubscribeModal" class="close-icon__button">
           <img src="../assets/images/available/close-modal.svg">
@@ -106,8 +105,6 @@
 
         <button class="footer-form-btn modal-btn">SEND</button>
       </div>
-
-
       <div id="sendCVModal" class="subscribe-form__modal send-form__modal">
         <button id="closeSubscribeModalCV" class="close-icon__button">
           <img src="../assets/images/available/close-modal.svg">
@@ -180,7 +177,6 @@
         </div>
         <button class="footer-form-btn modal-btn">SEND</button>
       </div>
-
     </div>
 
 
@@ -249,7 +245,7 @@ export default {
 </script>
 
 <style scoped>
-bbody {
+body {
   position: relative;
 }
 

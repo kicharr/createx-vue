@@ -297,9 +297,7 @@
       <div class="team-position__link">
         <p class="position__link-text">Become a part of the best team in the construction market of the USA.
         </p>
-        <router-link :to='{name: "vacancies"}' class="available-positions">Available Positions</router-link>
-
-        <a href="/vacancies">123213</a>
+        <router-link to="/vacancies" class="available-positions">Available Positions</router-link>
       </div>
     </section>
     <section class="map-worldwide container">

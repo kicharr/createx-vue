@@ -47,17 +47,9 @@ export default {
     SwiperSlide,
   },
   data() {
-    return {
-      imagesUrl: 'https://res.cloudinary.com/dui2dgzj2/image/upload/v1689707210/bg-slider-image_iqrmp7.jpg'
-    }
+    return {}
   },
-  methods: {
-    doResponce() {
-      let responce = fetch(this.imagesUrl);
-      console.log(responce)
-    }
-
-  },
+  methods: {},
   setup() {
     const onSwiper = (swiper) => {
       console.log(swiper);

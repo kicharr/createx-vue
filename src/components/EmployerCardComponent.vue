@@ -31,7 +31,6 @@
 export default {
   name: 'EmployerCardComponent',
   data() {
-
   },
   props: ['employer']
 
